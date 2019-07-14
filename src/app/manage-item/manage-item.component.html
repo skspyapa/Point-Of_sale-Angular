@@ -1,0 +1,105 @@
+<section class="content-header">
+  <h1>
+    Manage Item
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active">Manage Item</li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+    <!-- left column -->
+    <div class="col-md-6">
+      <!-- general form elements -->
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Enter Item Details</h3>
+        </div>
+        <form role="form" #frmItem="ngForm" (ngSubmit)="saveItem()">
+          <div class="box-body">
+            <div class="form-group">
+              <label >Item Code</label>
+              <input #txtCode [(ngModel)]="currentItem.code" class="form-control" name="code" placeholder="Enter Item Code"
+                     type="text" pattern="^P\d{3}$">
+            </div>
+            <div class="form-group">
+              <label >Description</label>
+              <input [(ngModel)]="currentItem.description" class="form-control" name="description" placeholder="Enter Description"
+                     type="text"  minlength="4">
+            </div>
+            <div class="form-group">
+              <label>QtyOnHand</label>
+              <input [(ngModel)]="currentItem.unitPrice" class="form-control" name="unitprice"
+                     placeholder="Enter Qty On Hand" type="text" pattern="^\d*$">
+            </div>
+            <div class="form-group">
+              <label>UnitPrice</label>
+              <input [(ngModel)]="currentItem.qtyOnHand" class="form-control" name="qtyonhand"
+                     placeholder="Enter UnitPrice" type="text" pattern="[0-9]*">
+            </div>
+          </div>
+          <!-- /.box-body -->
+
+          <div class="box-footer">
+            <button class="btn btn-primary" type="submit">{{buttonText}}</button>
+            <button class="btn btn-warning" type="reset" (click)="clearForm()">Clear</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title">Item Details</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <table id="example2" class="table table-hover table-bordered">
+            <thead>
+            <tr>
+              <th>Code</th>
+              <th>Description</th>
+              <th>UnitPrice</th>
+              <th>QtyOnHand</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <!--      <tr *ngFor="let customer of customers" (click)="onRowClick(customer)" class="{{(selectedCustomer===customer)?'selected':''}}">-->
+            <tr (click)="onRowClick(item)" *ngFor="let item of items"
+                [class.selected]="selectedItem===item">
+              <td>{{item.code}}</td>
+              <td>{{item.description| uppercase }}</td>
+              <td>{{item.unitPrice| number : '1.2-2'}}</td>
+              <td>{{item.qtyOnHand}}</td>
+              <td style="text-align: center; font-size: 24px;" (mouseenter)="mouseEnter(item)" (mouseleave)="mouseExit(item)">
+                <!--          <i class="fas fa-trash-restore-alt"></i>-->
+                <i [ngClass]="getTrashClasses(item)" (click)="deleteItem(item)"></i>
+              </td>
+            </tr>
+            </tbody>
+            <tfoot *ngIf="showTableFoot">
+            <tr>
+              <td colspan="3">No Items are available</td>
+            </tr>
+            </tfoot>
+          </table>
+          <div id="pagination-wrapper">
+            <ngb-pagination
+              (pageChange)="onPageChange($event)"
+              [(page)]="page"
+              [pageSize]="pageSize"
+              [collectionSize]="customersCount"></ngb-pagination>
+          </div>
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- /.box -->
+    </div>
+  </div>
+
+</section>
+<!-- /.content -->

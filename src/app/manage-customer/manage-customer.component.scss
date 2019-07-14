@@ -1,0 +1,28 @@
+h2{
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+table tfoot{
+  text-align: center;
+}
+
+form div button{
+  margin: 5px
+}
+
+table tbody{
+  cursor: pointer;
+
+  td:last-child:hover{
+    color: red;
+  }
+}
+
+.selected{
+  background-color: lightgray;
+}
+
+.ng-dirty .ng-invalid:not(form){
+  border: 1px solid red;
+}

@@ -1,0 +1,153 @@
+<section class="content-header">
+  <h1>
+    Manage Order
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active">Manage Order</li>
+  </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+  <div class="row" id="row2">
+    <div class="col">
+      <form role="form" #frmOrder="ngForm">
+        <div class="form-group">
+          <label for="OrdId">Order ID</label>
+          <input type="text" class="form-control" id="OrdId"  placeholder="Order Id" value="{{orderId}}" disabled="disabled">
+          <!--<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
+        </div>
+        <div class="form-group">
+          <label for="date">Date</label>
+          <input type="text" class="form-control" id="Date" disabled="disabled" value="{{today | date:'yyyy-MM-dd'}}">
+          <!--<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
+        </div>
+        <hr>
+        <div class="row">
+          <div class="col col-12 col-sm-3">
+            <div class="form-group">
+              <label>Customer ID</label>
+              <select name="selectCustomer" class="form-control select2" data-placeholder="Select A Customer"
+                      style="width: 100%;" [(ngModel)]="currentCustomer">
+                <option *ngFor="let customer of customers" [ngValue]="customer">{{customer.id}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col col-sm-6">
+            <div class="form-group">
+              <label for="name">Customer Name</label>
+              <input type="text" class="form-control" id="name" disabled="disabled"  placeholder="Customer Name" value="{{currentCustomer.name}}">
+              <!--<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
+            </div>
+          </div>
+        </div>
+
+        <div class="row" id="form-row">
+          <div class="col col-12 col-sm-3">
+            <div class="form-group">
+              <label>Item Code</label>
+              <select name="selectItem" class="form-control select2" data-placeholder="Select A Customer"
+                      style="width: 100%;"  [(ngModel)]="currentItem" (change)="itemSelect()">
+                <option id="code" *ngFor="let item of items" [ngValue]="item" [selected]="item.code===selectedItem.code">{{item.code}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col col-12 col-sm-3">
+            <div class="form-group">
+              <label for="description">Description</label>
+              <input type="text" class="form-control" id="Description" disabled="disabled"  placeholder="Description" value="{{currentItem.description}}">
+              <!--<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
+            </div>
+          </div>
+          <div class="col col-12 col-sm-2">
+            <div class="form-group">
+              <label for="QtyOnHand">On Hand</label>
+              <input type="text" class="form-control" id="QtyOnHand" disabled="disabled" placeholder="QtyOnHand" value="{{currentItem.qtyOnHand}}">
+              <!--<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
+            </div>
+          </div>
+          <div class="col col-12 col-sm-2">
+            <div class="form-group">
+              <label for="quantity">Quantity</label>
+              <input type="text" class="form-control" id="Quantity" name="qty" placeholder="Quantity" [(ngModel)]="quantity" minlength="1" pattern="^[1-9]\d*$" [ngClass]="quntityobject" (keyup)="quantityCheck()">
+              <!--<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
+            </div>
+          </div>
+          <div class="col col-12 col-sm-2">
+            <div class="form-group">
+              <label for="UnitPrice">Unit Price</label>
+              <input type="text" class="form-control" id="UnitPrice" disabled="disabled" placeholder="Unitprice" value="{{currentItem.unitPrice| number : '1.2-2'}}">
+              <!--<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="form-group" id="btn-submit">
+          <button type="submit" class="btn btn-outline-primary" id="BtnSave" (click)="addOrder()">{{buttonText}}</button>
+
+        </div>
+        <hr>
+      </form>
+    </div>
+  </div>
+  </div>
+  <div class="row">
+     <!--left column-->
+    <div class="col">
+      <div class="box">
+        <div class="box-header">
+          <h3 class="box-title">Item Details</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+          <table id="example2" class="table table-hover table-bordered">
+            <thead>
+            <tr>
+              <th>Code</th>
+              <th>Description</th>
+              <th>Quantity</th>
+              <th>UnitPrice</th>
+              <th>Total</th>
+              <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!--      <tr *ngFor="let customer of customers" (click)="onRowClick(customer)" class="{{(selectedCustomer===customer)?'selected':''}}">-->
+            <tr (click)="onRowClick(i,detail)"  *ngFor="let detail of itemDetails; index as i">
+              <td>{{detail.itemCode}}</td>
+              <td>{{detail.description}}</td>
+              <td>{{detail.qty}}</td>
+              <td>{{detail.unitPrice| number : '1.2-2'}}</td>
+              <td>{{detail.unitPrice*detail.qty}}</td>
+              <td style="text-align: center; font-size: 24px;" (mouseenter)="mouseEnter(detail)" (mouseleave)="mouseExit(detail)">
+                <!--          <i class="fas fa-trash-restore-alt"></i>-->
+                <i [ngClass]="getTrashClasses(detail)" (click)="deleteItem(i,detail)"></i>
+              </td>
+            </tr>
+            </tbody>
+            <tfoot *ngIf="showTableFoot">
+            <tr>
+              <td colspan="3">No Items are available</td>
+            </tr>
+            </tfoot>
+          </table>
+        </div>
+        <!-- /.box-body -->
+      </div>
+      <!-- /.box -->
+    </div>
+  </div>
+  <div class="row" id="place-order">
+    <div class="col col-12 col-sm-10">
+      <span>Total :</span>
+      <span>{{total}}</span>
+    </div>
+    <div class="col col-12 col-sm-2" id="place-order-btn">
+      <button class="btn btn-outline-primary" id="PlaceOrder" (click)="saveOrder()">Place Order</button>
+    </div>
+  </div>
+
+</section>
+<!-- /.content -->

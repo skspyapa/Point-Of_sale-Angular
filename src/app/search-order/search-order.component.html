@@ -1,0 +1,65 @@
+<section class="content-header">
+  <h1>
+    Search Order
+  </h1>
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active">Search Order</li>
+  </ol>
+</section>
+
+
+<section class="content">
+  <div class="container-fluid">
+    <div class="row" id="row2">
+      <div class="col">
+        <form class="form-group">
+          <div class="form-row ">
+            <div class="col " id="div-input-search"><input class="form-control" type="text" placeholder="Search" aria-label="Search" id="search" name="search" [(ngModel)]="searchString" (keyup)="onPageChange()"></div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row" id="row3">
+      <div class="col">
+
+        <div class="box">
+
+        <div class="box-body">
+        <table id="example2" class="table table-hover table-bordered">
+          <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Customer ID</th>
+            <th>Date</th>
+            <th>Total</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr (click)="onRowClick(i,detail)"  *ngFor="let order of orders; index as i">
+            <td>{{order.id}}</td>
+            <td>{{order.customer_id}}</td>
+            <td>{{order.date}}</td>
+            <td>{{order.sum| number : '1.2-2'}}</td>
+          </tr>
+          </tbody>
+          <tfoot *ngIf="showTableFoot">
+          <tr>
+            <td colspan="3">No Orders are available</td>
+          </tr>
+          </tfoot>
+        </table>
+          <div id="pagination-wrapper">
+            <ngb-pagination
+              (pageChange)="onPageChange($event)"
+              [(page)]="page"
+              [pageSize]="pageSize"
+              [collectionSize]="customersCount"></ngb-pagination>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- /.content -->

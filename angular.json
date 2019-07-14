@@ -28,9 +28,25 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "node_modules/admin-lte/bower_components/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/admin-lte/bower_components/font-awesome/css/font-awesome.min.css",
+              "node_modules/admin-lte/bower_components/Ionicons/css/ionicons.min.css",
+              "node_modules/admin-lte/dist/css/AdminLTE.min.css",
+              "node_modules/admin-lte/dist/css/skins/skin-blue.min.css",
+              "node_modules/admin-lte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css",
+              "node_modules/admin-lte/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css",
+              "src/styles.scss",
+              "node_modules/admin-lte/bower_components/select2/dist/css/select2.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/admin-lte/bower_components/jquery/dist/jquery.min.js",
+              "node_modules/admin-lte/bower_components/jquery-ui/jquery-ui.min.js",
+              "node_modules/admin-lte/bower_components/bootstrap/dist/js/bootstrap.min.js",
+              "node_modules/admin-lte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js",
+              "node_modules/admin-lte/bower_components/jquery-slimscroll/jquery.slimscroll.min.js",
+              "node_modules/admin-lte/bower_components/fastclick/lib/fastclick.js",
+              "node_modules/admin-lte/dist/js/adminlte.min.js"
+            ]
           },
           "configurations": {
             "production": {
